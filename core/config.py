@@ -2,7 +2,11 @@
 import os
 import discord
 
-# Pulls Discord Token from .env - If not found then Raises Error.
+from dotenv import load_dotenv
+
+# Pulls Discord Token from .env - includes Loading.
+load_dotenv()
+
 DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
 
 # Variable for GUILD ID - Development Purposes.

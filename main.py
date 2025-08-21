@@ -6,7 +6,7 @@ from discord.ext import commands
 import os
 
 # Imports from config.py - Required for Token and GUILD ID.
-from config import DISCORD_TOKEN, GUILD_ID
+from core.config import DISCORD_TOKEN, GUILD_ID
 
 # Sets DISCORD_TOKEN to TOKEN Variable.
 TOKEN = DISCORD_TOKEN
