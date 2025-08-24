@@ -35,10 +35,10 @@ class ModDesk(commands.Bot):
             if DEV_MODE:
                 self.tree.copy_global_to(guild=GUILD_ID)
                 guild_synced = await self.tree.sync(guild=GUILD_ID)
-                print(f"[DEV MODE] Synced {len(guild_synced)} Command(s) to Development Guild.")
+                print(f"[DEV MODE] Synced {len(guild_synced)} Group(s) to Development Guild.")
             else:
                 global_synced = await self.tree.sync()
-                print(f"[PROD MODE] Synced {len(global_synced)} Global Command(s)")
+                print(f"[PROD MODE] Synced {len(global_synced)} Global Group(s)")
         except Exception as e:
             print(f"Failed to Sync Commands: {e}")
 
