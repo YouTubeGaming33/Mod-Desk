@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
+GMAIL_PASSWORD = os.getenv("GMAIL_PASS")
 
 # Variable for GUILD ID - Development Purposes.
 GUILD_ID = discord.Object(id=1408216142648184852)

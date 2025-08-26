@@ -2,6 +2,9 @@
 import discord
 from discord.ext import commands
 
+# Startup Email - Production Only
+from core.startupnotif import send_startup_email
+
 # Required OS Library.
 import os
 
@@ -39,6 +42,7 @@ class ModDesk(commands.Bot):
             else:
                 global_synced = await self.tree.sync()
                 print(f"[PROD MODE] Synced {len(global_synced)} Global Group(s)")
+                send_startup_email()
         except Exception as e:
             print(f"Failed to Sync Commands: {e}")
 
