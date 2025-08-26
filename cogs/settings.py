@@ -4,6 +4,31 @@ from discord import app_commands
 from data.database import get_guild, toggle_guild_setting
 from discord.ui import Section, TextDisplay, Container
 
+async def createChannels(interaction: discord.Interaction):
+    guild = interaction.guild
+    await interaction.response.defer(ephemeral=True)
+
+    category_name = "Mod-Desk Logs"
+    if discord.utils.get(guild.categories, name=category_name):
+        return
+
+    overwrites = {
+        guild.default_role: discord.PermissionOverwrite(view_channel=False),
+        interaction.user: discord.PermissionOverwrite(view_channel=True, manage_channels=True)
+    }
+
+    category = await guild.create_category(name=category_name, overwrites=overwrites)
+
+    log_channels = {
+        "message-logs": "Logs of all Message Activity.",
+        "member-logs": "Logs of Members Joining, Leaving, and Updating their Info.",
+        "moderation-logs": "Logs of Moderation Actions (e.g Bans and Kicks)."
+    }
+
+    for channel_name, topic in log_channels.items():
+        if not discord.utils.get(guild.channels, name=channel_name):
+            await guild.create_text_channel(channel_name, category=category, topic=topic)
+
 class ToggleButton(discord.ui.Button):
     def __init__(self, setting_name: str, state: bool):
         self.setting_name = setting_name
@@ -23,6 +48,9 @@ class ToggleButton(discord.ui.Button):
         # update button
         self.label = "ON" if new_state else "OFF"
         self.style = discord.ButtonStyle.success if new_state else discord.ButtonStyle.danger
+
+        if self.setting_name == "logging_enabled" and new_state:
+            await createChannels(interaction)
 
         # 👇 make sure we *always* respond
         if interaction.response.is_done():
